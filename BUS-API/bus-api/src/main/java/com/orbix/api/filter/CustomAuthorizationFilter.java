@@ -36,7 +36,6 @@ import com.orbix.api.domain.Role;
 import com.orbix.api.domain.User;
 import com.orbix.api.exceptions.InvalidOperationException;
 import com.orbix.api.exceptions.NotFoundException;
-import com.orbix.api.repositories.CashierRepository;
 import com.orbix.api.repositories.DayRepository;
 import com.orbix.api.repositories.UserRepository;
 import com.orbix.api.service.DayService;

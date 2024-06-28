@@ -9,7 +9,6 @@ import java.lang.reflect.Modifier;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -44,14 +43,11 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.orbix.api.domain.Cashier;
-import com.orbix.api.domain.Clinician;
 import com.orbix.api.domain.Privilege;
 import com.orbix.api.domain.Role;
 import com.orbix.api.domain.Shortcut;
 import com.orbix.api.domain.User;
 import com.orbix.api.exceptions.InvalidOperationException;
-import com.orbix.api.repositories.CashierRepository;
 import com.orbix.api.repositories.PrivilegeRepository;
 import com.orbix.api.repositories.RoleRepository;
 import com.orbix.api.repositories.UserRepository;
@@ -85,7 +81,6 @@ public class UserResource {
 	
 	private final RoleRepository roleRepository;
 	private final PrivilegeRepository privilegeRepository;
-	private final CashierRepository cashierRepository;
 	
 	@GetMapping("/users")
 	public ResponseEntity<List<User>>getUsers(
@@ -93,16 +88,7 @@ public class UserResource {
 		return ResponseEntity.ok().body(userService.getUsers());
 	}
 	
-	@GetMapping("/users/get_by_cashiers")
-	public ResponseEntity<List<User>>getUsersByCashiers(
-			HttpServletRequest request){
-		List<Cashier> cashiers = cashierRepository.findAll();
-		List<User> users = new ArrayList<>();
-		for(Cashier cashier : cashiers) {
-			users.add(cashier.getUser());
-		}
-		return ResponseEntity.ok().body(users);
-	}
+	
 	
 	@GetMapping("/users/get")
 	public ResponseEntity<User> getUserById(

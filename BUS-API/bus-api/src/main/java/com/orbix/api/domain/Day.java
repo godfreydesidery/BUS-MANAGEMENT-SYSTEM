@@ -4,7 +4,6 @@
 package com.orbix.api.domain;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;

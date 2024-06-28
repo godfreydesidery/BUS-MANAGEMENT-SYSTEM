@@ -4,10 +4,10 @@
 
   <groupId>com.orbix</groupId>
   <artifactId>api</artifactId>
-  <version>0.0.1-Zana-HMIS</version>
+  <version>0.0.1-Orbix-BMS</version>
   <packaging>jar</packaging>
 
-  <name>zana-hmis-api</name>
+  <name>orbix-bms-api</name>
   <url>http://maven.apache.org</url>
 
   <properties>

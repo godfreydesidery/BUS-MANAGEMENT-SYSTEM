@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
@@ -19,7 +18,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,11 +28,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.multipart.support.MultipartFilter;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.orbix.api.domain.CompanyProfile;
@@ -42,28 +35,11 @@ import com.orbix.api.domain.Day;
 import com.orbix.api.domain.Privilege;
 import com.orbix.api.domain.Role;
 import com.orbix.api.domain.User;
-import com.orbix.api.repositories.AdmissionBedRepository;
-import com.orbix.api.repositories.AdmissionRepository;
 import com.orbix.api.repositories.CompanyProfileRepository;
-import com.orbix.api.repositories.ConsultationRepository;
-import com.orbix.api.repositories.ConsultationTransferRepository;
 import com.orbix.api.repositories.DayRepository;
-import com.orbix.api.repositories.DeceasedNoteRepository;
-import com.orbix.api.repositories.DischargePlanRepository;
-import com.orbix.api.repositories.LabTestRepository;
-import com.orbix.api.repositories.NonConsultationRepository;
-import com.orbix.api.repositories.PatientBillRepository;
-import com.orbix.api.repositories.PatientInvoiceDetailRepository;
-import com.orbix.api.repositories.PatientInvoiceRepository;
-import com.orbix.api.repositories.PatientRepository;
-import com.orbix.api.repositories.PrescriptionRepository;
 import com.orbix.api.repositories.PrivilegeRepository;
-import com.orbix.api.repositories.ProcedureRepository;
-import com.orbix.api.repositories.RadiologyRepository;
-import com.orbix.api.repositories.ReferralPlanRepository;
 import com.orbix.api.repositories.RoleRepository;
 import com.orbix.api.repositories.UserRepository;
-import com.orbix.api.repositories.WardTypeInsurancePlanRepository;
 import com.orbix.api.security.Object_;
 import com.orbix.api.security.Operation;
 import com.orbix.api.service.CompanyProfileService;
@@ -71,7 +47,6 @@ import com.orbix.api.service.DayService;
 import com.orbix.api.service.UserService;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -96,25 +71,8 @@ public class MainApplication {
     UserService userService;
     private final PrivilegeRepository privilegeRepository;
     
-    private final ConsultationRepository consultationRepository;
-	private final NonConsultationRepository nonConsultationRepository;
-	private final AdmissionRepository admissionRepository;
-	private final PatientBillRepository patientBillRepository;
-	private final LabTestRepository labTestRepository;
-	private final RadiologyRepository radiologyRepository;
-	private final ProcedureRepository procedureRepository;
-	private final PrescriptionRepository prescriptionRepository;
-	private final ConsultationTransferRepository consultationTransferRepository;
-	private final RoleRepository roleRepository;
-	private final AdmissionBedRepository admissionBedRepository;	
-	private final DayService dayService;
-	private final WardTypeInsurancePlanRepository wardTypeInsurancePlanRepository;
-	private final PatientInvoiceRepository patientInvoiceRepository;
-	private final PatientInvoiceDetailRepository patientInvoiceDetailRepository;
-	private final DischargePlanRepository dischargePlanRepository;
-	private final DeceasedNoteRepository deceasedNoteRepository;
-	private final ReferralPlanRepository referralPlanRepository;
-	private final PatientRepository patientRepository;
+    private final RoleRepository roleRepository;
+	private final DayService dayService;	
 	private final UserRepository userRepository;
     
     @Autowired
@@ -160,26 +118,10 @@ public class MainApplication {
 	@Bean
 	void updateRecords() {
 		//thread to update patient records periodically
-		UpdatePatient updatePatient = new UpdatePatient(
-				consultationRepository, 
-				nonConsultationRepository, 
-				admissionRepository, 
-				patientBillRepository,
-				labTestRepository, 
-				radiologyRepository, 
-				procedureRepository, 
-				prescriptionRepository,
-				consultationTransferRepository,
-				admissionBedRepository,
-				dayService,
-				wardTypeInsurancePlanRepository,
-				patientInvoiceRepository,
-				patientInvoiceDetailRepository,
-				dischargePlanRepository,
-				deceasedNoteRepository,
-				referralPlanRepository,
-				patientRepository);
-	    Thread updatePatientThread = new Thread(updatePatient);
+		UpdateInfo updateInfo = new UpdateInfo(
+				dayService
+				);
+	    Thread updatePatientThread = new Thread(updateInfo);
 	    updatePatientThread.start();
 	}
 	
@@ -208,21 +150,7 @@ public class MainApplication {
 			List<String> roleNames = new ArrayList<>();
 			roleNames.add("ROOT");
 			roleNames.add("ADMIN");
-			roleNames.add("RECEPTION");
-			roleNames.add("CASHIER");
-			roleNames.add("HUMAN-RESOURCE");
-			roleNames.add("PROCUREMENT");
-			roleNames.add("MANAGER");
-			roleNames.add("ACCOUNTANT");
-			//roleNames.add("STORE-KEEPER");
-			roleNames.add("STORE-PERSON");
-			roleNames.add("MANAGEMENT");
-			roleNames.add("CLINICIAN");
-			roleNames.add("NURSE");
-			roleNames.add("PHARMACIST");
-			roleNames.add("LABORATORIST");
-			roleNames.add("RADIOGRAPHER");
-			roleNames.add("RADIOLOGIST");
+			
 			
 			for(String roleName : roleNames) {
 				if(!roleRepository.existsByName(roleName)) {
