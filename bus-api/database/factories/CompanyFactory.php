@@ -18,6 +18,12 @@ class CompanyFactory extends Factory
     {
         return [
             //
+            'code' => $this->faker->name,
+            'name' => $this->faker->name,
+            'brand_name' => $this->faker->name,
+            'contact_name' => $this->faker->name,
+            'email' => $this->faker->email,
+            'website' => $this->faker->url
         ];
     }
 }

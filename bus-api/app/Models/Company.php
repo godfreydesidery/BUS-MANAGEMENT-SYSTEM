@@ -10,4 +10,9 @@ class Company extends Model
     use HasFactory;
 
     protected $fillable = ['code', 'name', 'brand_name', 'contact_name', 'email', 'website'];
+
+    public function vehicles(): HasMany
+    {
+        return $this->hasMany(Vehicle::class);
+    }
 }

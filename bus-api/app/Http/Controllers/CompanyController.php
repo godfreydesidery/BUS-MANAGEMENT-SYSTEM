@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
+use App\Http\Resources\CompanyResource;
 
 class CompanyController extends Controller
 {
@@ -13,7 +14,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+        return CompanyResource::collection(Company::all());
     }
 
     /**
@@ -29,7 +30,20 @@ class CompanyController extends Controller
      */
     public function store(StoreCompanyRequest $request)
     {
-        //
+
+        $faker = \Faker\Factory::create(1);
+
+        $company = Company::create([
+            'code' => $faker->name,
+            'name' => $faker->name,
+            'brand_name' => $faker->name,
+            'contact_name' => $faker->name,
+            'email' => $faker->email,
+            'website' => $faker->url
+        ]);
+
+        return new CompanyResource($company); 
+
     }
 
     /**
@@ -37,7 +51,7 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
-        //
+        return new CompanyResource($company);
     }
 
     /**
@@ -53,7 +67,13 @@ class CompanyController extends Controller
      */
     public function update(UpdateCompanyRequest $request, Company $company)
     {
-        //
+        //$faker = \Faker\Factory::create(1);
+
+        $company->update([
+            'name' => $request->name
+        ]);
+
+        return new CompanyResource($company); 
     }
 
     /**
@@ -61,6 +81,7 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-        //
+        $company->delete();
+        return response(null, 204);
     }
 }
