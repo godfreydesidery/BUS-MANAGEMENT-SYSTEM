@@ -1,0 +1,10 @@
+
+
+
+Passport commands
+php artisan passport:client
+
+php artisan passport:client --password ///password grant client
+
+php artisan tinker  >> Accepts commands
+eg. DB::table('users')->insert(['name'=>'desideryg@gmail.com','email'=>'desideryg@gmail.com','password'=>Hash::make('password')]);
