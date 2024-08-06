@@ -9,10 +9,41 @@ class Company extends Model
 {
     use HasFactory;
 
-    public $code;
-    public $name;
-    public $brandName;
+    public $code = null;
+    public $name = '';
+    public $brand_name = '';
+    public $contact_name = '';
+    public $time_zone = '+03:00'; //Set to default value
+    public $email = '';
+    public $website = '';
+    public $passenger_code_prefix = 'PAX';
+    public $slogan = 'NA';
+    public $cargo_code_prefix = 'CAX';
+    public $is_aggregator = false;
+    public $max_seats_per_normal_booking = 1;
+    public $max_seats_per_enroute_booking = 1;
+    public $allow_normal_passenger_sales = false;
+    public $allow_enroute_passenger_sales = false;
+    public $allow_cargo_sales = false;
+    public $allow_return_sales = false;
+    public $allow_other_agents_sales = false;
+    public $allow_different_return_seat = false;
+    public $max_days_online_sales = 14;
+    public $max_days_agents_sales = 30;
+    public $allow_future_cargo_date = false;
+    public $allow_future_enroute_date = false;
+    public $end_public_sales_before = '00:30:00';
+    public $end_pos_sales_after = '00:30:00';
+    public $cancel_reserve_seat_after = '00:15:00';
+    public $cancel_hold_seat_after = '00:15:00';
+    public $deduct_commision_from = 'OPERATOR';
 
+
+    public function __construct(array $attributes = array())
+    {
+        parent::__construct($attributes);
+    }
+    
 
     protected $fillable = [
         'code',

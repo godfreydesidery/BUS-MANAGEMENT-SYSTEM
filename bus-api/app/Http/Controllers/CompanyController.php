@@ -42,42 +42,78 @@ class CompanyController extends Controller
             //'website' => $faker->url
         //]);
 
-        
+        /*
+        $company = new Company();
+        $company->code = $request->code;
+        $company->name = $request->name;
+        $company->contact_name = $request->contact_name;
+        $company->time_zone = $request->time_zone;
+        $company->passenger_code_prefix = $request->passenger_code_prefix;
+        $company->cargo_code_prefix = $request->cargo_code_prefix;
+        $company->slogan = $request->slogan;
+        $company->email = $request->email;
+        $company->website = $request->website;
+        $company->is_aggregator = $request->is_aggregator;
+        $company->max_seats_per_normal_booking = $request->max_seats_per_normal_booking;
+        $company->max_seats_per_enroute_booking = $request->max_seats_per_enroute_booking;
+        $company->allow_normal_passenger_sales = $request->allow_normal_passenger_sales;
+        $company->allow_enroute_passenger_sales = $request->allow_enroute_passenger_sales;
+        $company->allow_cargo_sales = $request->allow_cargo_sales;
+        $company->allow_return_sales = $request->allow_return_sales;
+        $company->allow_other_agents_sales = $request->allow_other_agents_sales;
+        $company->allow_different_return_seat = $request->allow_different_return_seat;
+        $company->max_days_online_sales = $request->max_days_online_sales;
+        $company->max_days_agents_sales = $request->max_days_agents_sales;
+        $company->allow_future_cargo_date = $request->allow_future_cargo_date;
+        $company->allow_future_enroute_date = $request->allow_future_enroute_date;
+        $company->end_public_sales_before = $request->end_public_sales_before;
+        $company->end_pos_sales_after = $request->end_pos_sales_after;
+        $company->cancel_reserve_seat_after = $request->cancel_reserve_seat_after;
+        $company->cancel_hold_seat_after = $request->cancel_hold_seat_after;
+        $company->deduct_commision_from = $request->deduct_commision_from;
+
+        $company->save();
+
+        */
 
 
         $company = Company::create([
+            
+            /**Basic Details */
             'code' => $request->code,
             'name' => $request->name,
             'brand_name' => $request->brand_name,
+            'is_aggregator' => $request->is_aggregator,
+
+            /**Address */
             'contact_name' => $request->contact_name,
+            'email' => $request->email,
+            'website' => $request->website,
+
+            /**Configurations */
+            'slogan' => $request->slogan,
             'time_zone' => $request->time_zone,
             'passenger_code_prefix' => $request->passenger_code_prefix,
             'cargo_code_prefix' => $request->cargo_code_prefix,
-            'slogan' => $request->slogan,
-            'email' => $request->email,
-            'website' => $request->website,
-            'is_aggregator' => $request->is_aggregator,
-            'max_seats_per_normal_booking' => $request->max_seats_per_normal_booking,
-            'max_seats_per_enroute_booking' => $request->max_seats_per_enroute_booking,
             'allow_normal_passenger_sales' => $request->allow_normal_passenger_sales,
             'allow_enroute_passenger_sales' => $request->allow_enroute_passenger_sales,
             'allow_cargo_sales' => $request->allow_cargo_sales,
             'allow_return_sales' => $request->allow_return_sales,
             'allow_other_agents_sales' => $request->allow_other_agents_sales,
             'allow_different_return_seat' => $request->allow_different_return_seat,
-            'max_days_online_sales' => $request->max_days_online_sales,
-            'max_days_agents_sales' => $request->max_days_agents_sales,
             'allow_future_cargo_date' => $request->allow_future_cargo_date,
             'allow_future_enroute_date' => $request->allow_future_enroute_date,
+            'max_seats_per_normal_booking' => $request->max_seats_per_normal_booking,
+            'max_seats_per_enroute_booking' => $request->max_seats_per_enroute_booking,           
+            'max_days_online_sales' => $request->max_days_online_sales,
+            'max_days_agents_sales' => $request->max_days_agents_sales,
             'end_public_sales_before' => $request->end_public_sales_before,
             'end_pos_sales_after' => $request->end_pos_sales_after,
             'cancel_reserve_seat_after' => $request->cancel_reserve_seat_after,
             'cancel_hold_seat_after' => $request->cancel_hold_seat_after,
             'deduct_commission_from' => $request->deduct_commission_from,
         ]);
-
-        return new CompanyResource($company); 
-
+        return $this->show($company);
     }
 
     /**

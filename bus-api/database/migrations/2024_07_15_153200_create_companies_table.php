@@ -42,8 +42,6 @@ return new class extends Migration
             $table->time('cancel_hold_seat_after')->default('00:15:00');
             $table->string('deduct_commission_from')->default('OPERATOR');
 
-            //$table->string('test_column')->nullable();
-
             $table->timestamps();
         });
     }
