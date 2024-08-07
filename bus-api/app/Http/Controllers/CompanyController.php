@@ -6,9 +6,99 @@ use App\Models\Company;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Http\Resources\CompanyResource;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\CompanyRequest;
+use Exception;
 
 class CompanyController extends Controller
 {
+    public function getAll(){
+        try{
+            $companies = Company::all();
+            return $this->stdResponse(200, 'Success', 'Success', $companies);
+        }catch(Exception $e){
+            return $this->stdResponse(200, $e->getCode(), 'Failure', '');
+        }
+    }
+
+    public function getById($id){
+        $company = Company::whereId($id)->first();
+        if(isset($company)){
+            return $this->stdResponse(200, 'Success', 'Success', $company);
+        }else{
+            return $this->stdResponse(404, 'Failure', 'Not Found', '');
+        }
+    }
+
+    public function getByCode($code){
+        $company = Company::whereCode($code)->first();
+        if(isset($company)){
+            return $this->stdResponse(200, 'Success', 'Success', $company);
+        }else{
+            return $this->stdResponse(404, 'Failure', 'Not Found', '');
+        }
+    }
+
+    public function create(CompanyRequest $request){
+        if($request->name == ''){
+            return $this->stdResponse(404, 'Failure', 'An Error has occured', '');
+        }
+        try{
+            $company = Company::create([
+                /**Basic Details */
+                'code' => $request->code,
+                'name' => $request->name,
+                'brand_name' => $request->brand_name,
+                'is_aggregator' => $request->is_aggregator,    
+                /**Address */
+                'contact_name' => $request->contact_name,
+                'email' => $request->email,
+                'website' => $request->website,   
+                /**Configurations */
+                'slogan' => $request->slogan,
+                'time_zone' => $request->time_zone,
+                'passenger_code_prefix' => $request->passenger_code_prefix,
+                'cargo_code_prefix' => $request->cargo_code_prefix,
+                'allow_normal_passenger_sales' => $request->allow_normal_passenger_sales,
+                'allow_enroute_passenger_sales' => $request->allow_enroute_passenger_sales,
+                'allow_cargo_sales' => $request->allow_cargo_sales,
+                'allow_return_sales' => $request->allow_return_sales,
+                'allow_other_agents_sales' => $request->allow_other_agents_sales,
+                'allow_different_return_seat' => $request->allow_different_return_seat,
+                'allow_future_cargo_date' => $request->allow_future_cargo_date,
+                'allow_future_enroute_date' => $request->allow_future_enroute_date,
+                'max_seats_per_normal_booking' => $request->max_seats_per_normal_booking,
+                'max_seats_per_enroute_booking' => $request->max_seats_per_enroute_booking,           
+                'max_days_online_sales' => $request->max_days_online_sales,
+                'max_days_agents_sales' => $request->max_days_agents_sales,
+                'end_public_sales_before' => $request->end_public_sales_before,
+                'end_pos_sales_after' => $request->end_pos_sales_after,
+                'cancel_reserve_seat_after' => $request->cancel_reserve_seat_after,
+                'cancel_hold_seat_after' => $request->cancel_hold_seat_after,
+                'deduct_commission_from' => $request->deduct_commission_from,
+            ]);    
+            return $this->stdResponse(200, 'Success', 'Success', $company);
+        }catch(Exception $e){
+            return $this->stdResponse($e->getCode(), $e->getMessage(), 'Failure', '');
+        }
+    }
+
+    public function update(CompanyRequest $request, Company $company){
+
+    }
+
+    public function delete(Company $company){
+
+    }
+
+    
+
+
+
+
+
+
+
     /**
      * Display a listing of the resource.
      */
@@ -20,7 +110,7 @@ class CompanyController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create1()
     {
         //
     }
@@ -113,7 +203,9 @@ class CompanyController extends Controller
             'cancel_hold_seat_after' => $request->cancel_hold_seat_after,
             'deduct_commission_from' => $request->deduct_commission_from,
         ]);
-        return $this->show($company);
+        //return $this->show($company);
+
+        return $this->stdResponse(200, 'Success', 'Success', $company);
     }
 
     /**
@@ -135,7 +227,7 @@ class CompanyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCompanyRequest $request, Company $company)
+    public function update1(UpdateCompanyRequest $request, Company $company)
     {
         //$faker = \Faker\Factory::create(1);
 
@@ -154,4 +246,18 @@ class CompanyController extends Controller
         $company->delete();
         return response(null, 204);
     }
+
+
+
+    private function stdResponse($status, $message, $statusMessage, $data){
+        return response()
+        ->json([
+            'status' => $status,
+            'message' => $message,
+            'status_message' => $statusMessage,
+            'data' => $data
+        ]);
+    }
+
+
 }

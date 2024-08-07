@@ -29,7 +29,12 @@ Route::middleware('auth:api')->prefix('v1')->group(function(){
     //Route::get('/companies', [CompanyController::class, 'index']);
     //Route::get('/companies/{company}', [CompanyController::class, 'show']);
 
-    Route::apiResource('/companies', CompanyController::class);
+    //Route::apiResource('/companies', CompanyController::class);
+
+    Route::get('companies', [CompanyController::class, 'getAll']);
+    Route::get('companies/get/{id}', [CompanyController::class, 'getById']);
+    Route::get('companies/get_by_code/{code}', [CompanyController::class, 'getByCode']);
+    Route::post('companies/create', [CompanyController::class, 'create']);
 });
 
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
