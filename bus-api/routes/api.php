@@ -28,13 +28,20 @@ Route::middleware('auth:api')->prefix('v1')->group(function(){
 
     //Route::get('/companies', [CompanyController::class, 'index']);
     //Route::get('/companies/{company}', [CompanyController::class, 'show']);
-
     //Route::apiResource('/companies', CompanyController::class);
 
+    /**Company API */
     Route::get('companies', [CompanyController::class, 'getAll']);
     Route::get('companies/get/{id}', [CompanyController::class, 'getById']);
     Route::get('companies/get_by_code/{code}', [CompanyController::class, 'getByCode']);
     Route::post('companies/create', [CompanyController::class, 'create']);
+    Route::post('companies/update/{id}', [CompanyController::class, 'update']);
+    Route::post('companies/delete/{id}', [CompanyController::class, 'delete']);
+    Route::post('companies/lock/{id}', [CompanyController::class, 'lock']);
+    Route::post('companies/unlock/{id}', [CompanyController::class, 'unlock']);
+
+    /**Vehicle API */
+
 });
 
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
