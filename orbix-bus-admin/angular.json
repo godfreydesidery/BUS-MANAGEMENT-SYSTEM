@@ -30,10 +30,33 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
-              "../node_modules/font-awesome/scss/font-awesome.scss"
+              "src/styles.scss"
             ],
-            "scripts": [],
+            "scripts": [
+              "src/assets/plugins/jQuery/jquery-1.12.4.min.js",
+              "src/assets/plugins/jquery-ui-1.12.1/jquery-ui.min.js",
+              "src/assets/bootstrap/js/bootstrap.min.js",
+              "src/assets/plugins/lobipanel/lobipanel.min.js",
+              "src/assets/plugins/pace/pace.min.js",
+              "src/assets/plugins/slimScroll/jquery.slimscroll.min.js",
+              "src/assets/plugins/fastclick/fastclick.min.js",
+              "src/assets/dist/js/custom1.js",
+              "src/assets/plugins/toastr/toastr.min.js",
+              "src/assets/plugins/sparkline/sparkline.min.js",
+              "src/assets/plugins/datamaps/d3.min.js",
+              "src/assets/plugins/datamaps/topojson.min.js",
+              "src/assets/plugins/datamaps/datamaps.all.min.js",
+              "src/assets/plugins/counterup/waypoints.js",
+              "src/assets/plugins/counterup/jquery.counterup.min.js",
+              "src/assets/plugins/chartJs/Chart.min.js",
+              "src/assets/plugins/emojionearea/emojionearea.min.js",
+              "src/assets/plugins/monthly/monthly.js",
+              "src/assets/plugins/datamaps/d3.min.js",
+              "src/assets/plugins/datamaps/topojson.min.js",
+              "src/assets/plugins/datamaps/datamaps.all.min.js",
+              "src/assets/dist/js/custom.js",
+              "src/assets/js/management-dashboard.js"
+            ],
             "server": "src/main.server.ts",
             "prerender": true,
             "ssr": {
@@ -105,6 +128,6 @@
     }
   },
   "cli": {
-    "analytics": "14b20eaf-2eac-4904-bdb1-90a0f0c7402c"
+    "analytics": "788fa9ab-63d1-4b47-88b0-6b074151fe02"
   }
 }
